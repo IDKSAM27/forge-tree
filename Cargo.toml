@@ -9,7 +9,7 @@ repository = "https://github.com/IDKSAM27/forge-tree"
 homepage = "https://github.com/IDKSAM27/forge-tree"
 documentation = "https://docs.rs/forge-tree"
 readme = "README.md"
-keywords = ["scaffold", "generator", "cli", "project", "template", "forge", "tree"]
+keywords = ["scaffold", "generator", "cli", "project", "template"]
 categories = ["command-line-utilities", "development-tools"]
 exclude = ["tests/fixtures/*", ".github/*"]
 
