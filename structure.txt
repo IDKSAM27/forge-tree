@@ -1,0 +1,12 @@
+my-awesome-project/
+├── src/
+│ ├── components/
+│ │ ├── Header.js
+│ │ └── Footer.js
+│ ├── utils/
+│ │ └── helpers.js
+│ └── index.js
+├── tests/
+│ └── app.test.js
+├── package.json
+└── README.md
