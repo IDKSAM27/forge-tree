@@ -1,4 +1,4 @@
-use crate::{Result, ScaffoldError};
+use crate::{Result, ForgeTreeError};
 use std::fs;
 use std::path::Path;
 
@@ -22,7 +22,7 @@ impl FileGenerator {
         let path = path.as_ref();
         
         if path.exists() && !path.is_dir() {
-            return Err(ScaffoldError::InvalidPath(
+            return Err(ForgeTreeError::InvalidPath(
                 format!("Path exists but is not a directory: {}", path.display())
             ));
         }
@@ -35,7 +35,7 @@ impl FileGenerator {
         let path = path.as_ref();
 
         if path.exists() && !self.force_overwrite {
-            return Err(ScaffoldError::FileExists(path.display().to_string()));
+            return Err(ForgeTreeError::FileExists(path.display().to_string()));
         }
 
         // Ensure parent directory exists

@@ -1,4 +1,4 @@
-use crate::{Result, ScaffoldError};
+use crate::{Result, ForgeTreeError};
 use handlebars::Handlebars;
 use serde_json::Value;
 use std::collections::HashMap;
@@ -22,17 +22,17 @@ impl TemplateEngine {
 
     pub fn render_template(&self, template: &str, variables: &HashMap<String, String>) -> Result<String> {
         let json_vars: Value = serde_json::to_value(variables)
-            .map_err(|e| ScaffoldError::Parse(format!("Failed to serialize variables: {}", e)))?;
+            .map_err(|e| ForgeTreeError::Parse(format!("Failed to serialize variables: {}", e)))?;
         
         self.handlebars
             .render_template(template, &json_vars)
-            .map_err(ScaffoldError::Template)
+            .map_err(ForgeTreeError::Template)
     }
 
     pub fn register_template(&mut self, name: &str, template: &str) -> Result<()> {
         self.handlebars
             .register_template_string(name, template)
-            .map_err(ScaffoldError::Template)
+            .map_err(ForgeTreeError::Template)
     }
 }
 
