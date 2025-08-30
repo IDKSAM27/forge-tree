@@ -1,17 +1,12 @@
 use crate::parser::{ItemType, ProjectStructure, StructureItem};
 use crate::{Result, ForgeTreeError};
-use regex::Regex;
 use std::collections::HashMap;
 
-pub struct TreeParser {
-    tree_chars: Regex,
-}
+pub struct TreeParser;
 
 impl TreeParser {
     pub fn new() -> Self {
-        Self {
-            tree_chars: Regex::new(r"^([│├└─\s]*)(.*?)/?$").unwrap(),
-        }
+        Self
     }
 
     pub fn parse(&self, input: &str) -> Result<ProjectStructure> {

@@ -1,4 +1,3 @@
-use clap::Command;
 use colored::*;
 use forge_tree::cli::Cli;
 

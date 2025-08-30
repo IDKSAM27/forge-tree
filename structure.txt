@@ -1,12 +1,30 @@
-my-awesome-project/
-├── src/
-│ ├── components/
-│ │ ├── Header.js
-│ │ └── Footer.js
-│ ├── utils/
-│ │ └── helpers.js
-│ └── index.js
-├── tests/
-│ └── app.test.js
-├── package.json
-└── README.md
+my-dream-project/
+├── frontend/
+│ ├── src/
+│ │ ├── components/
+│ │ │ ├── Header.jsx
+│ │ │ ├── Footer.jsx
+│ │ │ └── Sidebar.jsx
+│ │ ├── pages/
+│ │ │ ├── Home.jsx
+│ │ │ └── About.jsx
+│ │ ├── utils/
+│ │ │ └── api.js
+│ │ └── App.jsx
+│ ├── package.json
+│ └── README.md
+├── backend/
+│ ├── src/
+│ │ ├── routes/
+│ │ │ ├── auth.rs
+│ │ │ └── api.rs
+│ │ ├── models/
+│ │ │ └── user.rs
+│ │ ├── main.rs
+│ │ └── lib.rs
+│ ├── Cargo.toml
+│ └── README.md
+├── docs/
+│ ├── api.md
+│ └── setup.md
+└── docker-compose.yml

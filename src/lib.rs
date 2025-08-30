@@ -1,24 +1,23 @@
-//! # Forge-Tree
+//! # Forge-Tree 
 //! 
 //! A powerful project scaffolding tool that generates folder and file structures
-//! from text representations. Forge your project structure from simple text!
+//! from text representations.
 //! 
 //! ## Quick Start
 //! 
 //! ```
-//! use forge_tree::{Parser, Generator};
+//! use forge_tree::{Parser};
 //! 
-//! let structure = r#"
-//! my-project/
+//! let structure = r#"my-awesome-project/
 //! ├── src/
 //! │   ├── main.rs
 //! │   └── lib.rs
-//! └── Cargo.toml
-//! "#;
+//! └── Cargo.toml"#;
 //! 
-//! let parsed = Parser::new().parse(structure)?;
-//! Generator::new().generate(&parsed, "./output")?;
-//! # Ok::<(), Box<dyn std::error::Error>>(())
+//! let parsed = Parser::new().parse(structure).unwrap();
+//! assert_eq!(parsed.root, "my-awesome-project");
+//! assert_eq!(parsed.items.len(), 2); // src/ and Cargo.toml
+//! println!("Parsed project: {}", parsed.root);
 //! ```
 
 pub mod cli;
@@ -35,4 +34,3 @@ pub use parser::Parser;
 pub mod prelude {
     pub use crate::{Generator, Parser, Result, ForgeTreeError};
 }
-
