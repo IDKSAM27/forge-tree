@@ -45,64 +45,95 @@ impl TreeParser {
     }
 
     fn parse_lines(&self, lines: &[&str], base_indent: usize) -> Result<Vec<StructureItem>> {
-        let mut items = Vec::new();
-        let mut i = 0;
+    let mut items = Vec::new();
+    let mut i = 0;
 
-        while i < lines.len() {
-            let line = lines[i];
-            if line.trim().is_empty() {
-                i += 1;
-                continue;
-            }
-
-            let indent = self.get_indent_level(line);
-            if indent < base_indent {
-                break;
-            }
-            if indent > base_indent {
-                i += 1;
-                continue;
-            }
-
-            let (name, is_directory) = self.parse_line(line)?;
-            let mut item = StructureItem {
-                name: name.clone(),
-                path: name,
-                item_type: if is_directory { ItemType::Directory } else { ItemType::File },
-                template: None,
-                content: None,
-                children: Vec::new(),
-            };
-
-            // Look ahead for children
+    while i < lines.len() {
+        let line = lines[i];
+        if line.trim().is_empty() {
             i += 1;
-            let mut child_lines = Vec::new();
-            while i < lines.len() {
-                let child_line = lines[i];
-                if child_line.trim().is_empty() {
-                    i += 1;
-                    continue;
-                }
-                
-                let child_indent = self.get_indent_level(child_line);
-                if child_indent <= indent {
-                    break;
-                }
-                
-                child_lines.push(child_line);
-                i += 1;
-            }
-
-            if !child_lines.is_empty() {
-                item.children = self.parse_lines(&child_lines, indent + 1)?;
-                item.item_type = ItemType::Directory; // Has children, must be directory
-            }
-
-            items.push(item);
+            continue;
         }
 
-        Ok(items)
+        let current_level = self.get_visual_depth(line);
+        
+        // Skip lines that are at a deeper level than we're currently processing
+        if current_level < base_indent {
+            break;
+        }
+        if current_level > base_indent {
+            i += 1;
+            continue;
+        }
+
+        let (name, is_directory) = self.parse_line(line)?;
+        let mut item = StructureItem {
+            name: name.clone(),
+            path: name,
+            item_type: if is_directory { ItemType::Directory } else { ItemType::File },
+            template: None,
+            content: None,
+            children: Vec::new(),
+        };
+
+        // Look ahead for children at the next level
+        i += 1;
+        let mut child_lines = Vec::new();
+        let expected_child_level = current_level + 1;
+        
+        while i < lines.len() {
+            let child_line = lines[i];
+            if child_line.trim().is_empty() {
+                i += 1;
+                continue;
+            }
+            
+            let child_level = self.get_visual_depth(child_line);
+            
+            // If we hit a line at our level or above, stop collecting children
+            if child_level <= current_level {
+                break;
+            }
+            
+            // If this is a direct child, add it
+            if child_level == expected_child_level {
+                child_lines.push(child_line);
+            }
+            
+            i += 1;
+        }
+
+        // Recursively parse children
+        if !child_lines.is_empty() {
+            item.children = self.parse_lines(&child_lines, expected_child_level)?;
+            item.item_type = ItemType::Directory; // Has children, must be directory
+        }
+
+        items.push(item);
     }
+
+    Ok(items)
+    }
+
+    fn get_visual_depth(&self, line: &str) -> usize {
+        let trimmed = line.trim_start();
+        let leading_whitespace = line.len() - trimmed.len();
+        
+        // Count tree characters at the start
+        let mut tree_chars = 0;
+        for ch in trimmed.chars() {
+            match ch {
+                '├' | '└' | '│' | '─' => tree_chars += 1,
+                ' ' => continue, // Skip spaces between tree chars
+                _ => break,
+            }
+        }
+        
+        // Calculate depth based on leading whitespace and tree characters
+        // Each level typically has 2-4 characters of indentation
+        std::cmp::max(leading_whitespace / 2, tree_chars / 3)
+    }
+
 
     fn parse_line(&self, line: &str) -> Result<(String, bool)> {
         if let Some(captures) = self.tree_chars.captures(line) {
