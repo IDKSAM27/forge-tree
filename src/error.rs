@@ -10,8 +10,11 @@ pub enum ForgeTreeError {
     #[error("Parse error: {0}")]
     Parse(String),
 
-    #[error("Template error: {0}")]
-    Template(#[from] handlebars::RenderError),
+    #[error("Template render error: {0}")]
+    TemplateRender(#[from] handlebars::RenderError),
+
+    #[error("Template parse error: {0}")]
+    TemplateParse(#[from] handlebars::TemplateError),
 
     #[error("Serialization error: {0}")]
     Serialization(#[from] serde_yaml::Error),
@@ -25,4 +28,3 @@ pub enum ForgeTreeError {
     #[error("Template not found: {0}")]
     TemplateNotFound(String),
 }
-

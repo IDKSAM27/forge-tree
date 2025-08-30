@@ -5,7 +5,7 @@ pub use file_generator::FileGenerator;
 pub use template_engine::TemplateEngine;
 
 use crate::parser::ProjectStructure;
-use crate::{Result, ForgeTreeError};
+use crate::Result;
 use colored::*;
 use indicatif::{ProgressBar, ProgressStyle};
 use std::path::Path;

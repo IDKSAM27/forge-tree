@@ -24,19 +24,21 @@ impl TemplateEngine {
         let json_vars: Value = serde_json::to_value(variables)
             .map_err(|e| ForgeTreeError::Parse(format!("Failed to serialize variables: {}", e)))?;
         
+        // Remove the explicit map_err - the #[from] conversion handles it automatically
         self.handlebars
             .render_template(template, &json_vars)
-            .map_err(ForgeTreeError::Template)
+            .map_err(ForgeTreeError::TemplateRender)
     }
 
     pub fn register_template(&mut self, name: &str, template: &str) -> Result<()> {
+        // This now uses the TemplateParse variant for registration errors
         self.handlebars
             .register_template_string(name, template)
-            .map_err(ForgeTreeError::Template)
+            .map_err(ForgeTreeError::TemplateParse)
     }
 }
 
-// Helper functions
+// Helper functions remain the same...
 fn uppercase_helper(
     h: &handlebars::Helper,
     _: &Handlebars,
