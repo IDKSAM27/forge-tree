@@ -1,0 +1,41 @@
+[package]
+name = "forge-tree"
+version = "0.1.0"
+edition = "2021"
+authors = ["Sampreet Patil <sampreetpatil270@gmail.com>"]
+description = "A powerful project scaffolding tool that generates folder and file structures from text representations"
+license = "MIT"
+repository = "https://github.com/IDKSAM27/forge-tree"
+homepage = "https://github.com/IDKSAM27/forge-tree"
+documentation = "https://docs.rs/forge-tree"
+readme = "README.md"
+keywords = ["scaffold", "generator", "cli", "project", "template", "forge", "tree"]
+categories = ["command-line-utilities", "development-tools"]
+exclude = ["tests/fixtures/*", ".github/*"]
+
+[dependencies]
+clap = { version = "4.4", features = ["derive", "cargo"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+serde_json = "1.0"
+anyhow = "1.0"
+thiserror = "1.0"
+tokio = { version = "1.0", features = ["full"] }
+colored = "2.0"
+indicatif = "0.17"
+handlebars = "4.4"
+walkdir = "2.4"
+regex = "1.10"
+
+[dev-dependencies]
+tempfile = "3.8"
+assert_cmd = "2.0"
+predicates = "3.0"
+
+[[bin]]
+name = "forge-tree"
+path = "src/main.rs"
+
+[lib]
+name = "forge_tree"
+path = "src/lib.rs"
