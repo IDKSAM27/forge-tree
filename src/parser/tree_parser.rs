@@ -128,14 +128,58 @@ impl TreeParser {
         }
     }
 
+    
     fn get_indent_level(&self, line: &str) -> usize {
-        let tree_prefix_len = line.chars()
-            .take_while(|&c| "│├└─ \t".contains(c))
-            .count();
+        if line.trim().is_empty() {
+            return 0;
+        }
         
-        // Convert visual indentation to logical level
-        tree_prefix_len / 4
+        let mut level = 0;
+        let mut chars = line.chars().peekable();
+        
+        // Count indentation more intelligently
+        while let Some(&ch) = chars.peek() {
+            match ch {
+                // Tree drawing characters each represent one level
+                '├' | '└' => {
+                    chars.next();
+                    // Skip following dashes and spaces
+                    while let Some(&next_ch) = chars.peek() {
+                        if next_ch == '─' || next_ch == ' ' {
+                            chars.next();
+                        } else {
+                            break;
+                        }
+                    }
+                    level += 1;
+                }
+                '│' => {
+                    chars.next();
+                    // Skip following space
+                    if let Some(' ') = chars.peek() {
+                        chars.next();
+                    }
+                    level += 1;
+                }
+                ' ' => {
+                    // Count spaces in groups (typically 2-4 spaces per level)
+                    let mut space_count = 0;
+                    while let Some(' ') = chars.peek() {
+                        chars.next();
+                        space_count += 1;
+                    }
+                    // Each group of 2+ spaces represents roughly one level
+                    if space_count > 0 {
+                        level += (space_count + 1) / 2;
+                    }
+                }
+                _ => break,
+            }
+        }
+        
+        level
     }
+
 }
 
 impl Default for TreeParser {
