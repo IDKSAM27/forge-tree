@@ -1,8 +1,33 @@
-# Forge-Tree 
+
+<h1 align="center">Forge-Tree</h1>
+
+
+<div align="center">
+
+  <a href="https://crates.io/crates/forge-tree">
+    <img src="https://img.shields.io/crates/v/forge-tree.svg" alt="Crates.io">
+  </a>
+  <a href="https://docs.rs/forge-tree">
+    <img src="https://docs.rs/forge-tree/badge.svg" alt="docs.rs">
+  </a>
+
+</div>
+
+
+<p align="center">
+    Ever stared at a project structure in documentation and thought "Ugh, I have to create all these folders and files manually?" Yeah, we've all been there. That's exactly why Forge-Tree exists!
+  <br/>
+  <br/>
+  ·
+  <a href="https://github.com/IDKSAM27/forge-tree/issues">Report a Bug</a>
+  ·
+  <a href="https://github.com/IDKSAM27/forge-tree/issues">Request a Feature</a>
+</p>
+
 
 > **"Why spend hours creating folder structures when you can forge them in seconds?"**
 
-Ever stared at a project structure in documentation and thought *"Ugh, I have to create all these folders and files manually?"* Yeah, we've all been there. That's exactly why **Forge-Tree** exists!
+
 
 ## The Problem We All Face 
 
