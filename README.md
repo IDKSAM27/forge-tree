@@ -217,4 +217,4 @@ Full license text is in the `LICENSE` file, but honestly, it's pretty standard s
 
 **Made with 🦀 Rust, ❤️ Love, and Frustration at manual folder creation**
 
-*P.S. - It took me hours to `forge` this README, you better have read it all or else get ready to feel my breath in your ears while you're sleeping. And Yes, I know there are other scaffolding tools. But have you seen how pretty my progress bars are?*
+*P.S. - It took me hours to `forge` this README, you better have read it all or else get ready to feel my breath in your ears while you're sleeping. And Yes, I know there are other scaffolding tools. But have you seen how pretty my progress bars are? (Even though it's quite useless as the whole process is FAST af)*
